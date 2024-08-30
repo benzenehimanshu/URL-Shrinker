@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", "./views"); // Ensure this points to your views directory
 
 const urlSchema = new mongoose.Schema({
   fullUrl: String,
@@ -70,4 +70,4 @@ app.get("/:shortUrl", async (req, res) => {
   res.redirect(url.fullUrl);
 });
 
-app.listen(PORT, () => console.log(`Server running ${PORT} `));
+app.listen(PORT, () => console.log(`Server running ${PORT}`));
