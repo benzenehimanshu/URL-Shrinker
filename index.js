@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
+app.set("views", "./views");
 
 const urlSchema = new mongoose.Schema({
   fullUrl: String,
