@@ -2,14 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public")); // If you have static files
+
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 import methodOverride from "method-override";
 import { nanoid } from "nanoid";
 const mongoURL = process.env.MONGO_DB_URL;
-const app = express();
 
 mongoose
   .connect(mongoURL, {
@@ -28,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
-app.set("views", "./views"); // Ensure this points to your views directory
+app.set("views", "views"); // Ensure this points to your views directory
 
 const urlSchema = new mongoose.Schema({
   fullUrl: String,
