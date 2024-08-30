@@ -1,13 +1,13 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const path = require("path");
+const methodOverride = require("method-override");
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-import methodOverride from "method-override";
-import { nanoid } from "nanoid";
 const mongoURL = process.env.MONGO_DB_URL;
 
 mongoose
@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
-app.set("views", "views"); // Ensure this points to your views directory
+app.set("views", path.join(__dirname, "views"));
 
 const urlSchema = new mongoose.Schema({
   fullUrl: String,
@@ -44,6 +44,10 @@ app.get("/", async (req, res) => {
 
 app.post("/shortUrls", async (req, res) => {
   const fullUrl = req.body.fullUrl;
+
+  // Use dynamic import for nanoid
+  const { nanoid } = await import("nanoid");
+
   const shortUrl = nanoid(8);
 
   const url = new Url({ fullUrl, shortUrl });
@@ -70,4 +74,4 @@ app.get("/:shortUrl", async (req, res) => {
   res.redirect(url.fullUrl);
 });
 
-app.listen(PORT, () => console.log(`Server running ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
