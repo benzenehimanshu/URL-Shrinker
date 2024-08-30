@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public")); // If you have static files
 const PORT = process.env.PORT || 5000;
 
 import methodOverride from "method-override";
