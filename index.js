@@ -38,8 +38,10 @@ const urlSchema = new mongoose.Schema({
 const Url = mongoose.model("Url", urlSchema);
 
 app.get("/", async (req, res) => {
-  res.send("Hello, World!"); // Simple response for testing
+  const urls = await Url.find();
+  res.render("index", { urls });
 });
+
 app.post("/shortUrls", async (req, res) => {
   const fullUrl = req.body.fullUrl;
   const shortUrl = nanoid(8);
