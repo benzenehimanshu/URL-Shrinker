@@ -39,7 +39,10 @@ const Url = mongoose.model("Url", urlSchema);
 
 app.get("/", async (req, res) => {
   const urls = await Url.find();
-  res.render("index", { urls });
+  res.render("index", {
+    urls,
+    baseUrl: process.env.BASE_URL, // Pass the environment variable to the template
+  });
 });
 
 app.post("/shortUrls", async (req, res) => {
